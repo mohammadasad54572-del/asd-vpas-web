@@ -1,0 +1,77 @@
+{
+  "servers": {
+    "my-bot": {
+      "name": "my-bot",
+      "owner": "asdbhai",
+      "runtime": "python",
+      "status": "stopped",
+      "main_file": "main.py",
+      "port": 8080,
+      "packages": [],
+      "pid": null,
+      "created": "2026-06-03T19:36:50.722703",
+      "auto_restart": false,
+      "auto_restart_interval": 3600
+    },
+    "Assbhai": {
+      "name": "Assbhai",
+      "owner": "aadbhai",
+      "runtime": "python",
+      "status": "stopped",
+      "main_file": "",
+      "port": 8080,
+      "packages": [],
+      "pid": null,
+      "created": "2026-06-04T14:05:11.412413",
+      "auto_restart": false,
+      "auto_restart_interval": 3600
+    },
+    "Tg": {
+      "name": "Tg",
+      "owner": "mohammadasad54572@gmail.com",
+      "runtime": "python",
+      "status": "stopped",
+      "main_file": "",
+      "port": 8080,
+      "packages": [
+        {
+          "name": "boto3",
+          "version": "",
+          "installed_at": "2026-06-05T13:00:38.701131"
+        }
+      ],
+      "pid": null,
+      "created": "2026-06-05T12:58:50.675283",
+      "auto_restart": false,
+      "auto_restart_interval": 3600
+    }
+  },
+  "users": {
+    "asdbhai": {
+      "joined": "2026-06-03T19:36:23.942488",
+      "password_hash": "2f349cb6c8f7bb3f635e1126942d2e43b986df6c5dfe430a6ae1f5784af876dc"
+    },
+    "aadbhai": {
+      "joined": "2026-06-04T14:04:36.378957",
+      "password_hash": "b5a266ea5f072f89806d2bb65966a96279514a88de0e04b0c450d7642d2e5e7f"
+    },
+    "h1691034726@gmail.com": {
+      "joined": "2026-06-04T14:11:05.239448",
+      "password_hash": "acf74dc41da2882c26acdd59ee787bb35060c661d4a54fb1444c88f322cb31ce"
+    },
+    "mohammadasad54572@gmail.com": {
+      "joined": "2026-06-05T12:58:34.068694",
+      "password_hash": "acf74dc41da2882c26acdd59ee787bb35060c661d4a54fb1444c88f322cb31ce"
+    }
+  },
+  "settings": {
+    "maintenance": false,
+    "maintenance_msg": "System under maintenance.",
+    "accent_color": "#e2e8f0",
+    "broadcast": {
+      "active": false,
+      "message": "Hii",
+      "btype": "info"
+    }
+  }
+}

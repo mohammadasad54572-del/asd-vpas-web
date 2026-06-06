@@ -1,0 +1,6 @@
+# H@CKED BY TEAM MOD-X
+JOIN -
+@NTT_MOD_X
+@NTT_FAITH11
+@MOD_FF11
+developer- @nttmodX
