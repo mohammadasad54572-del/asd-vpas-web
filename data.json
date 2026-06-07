@@ -44,6 +44,38 @@
       "created": "2026-06-05T12:58:50.675283",
       "auto_restart": false,
       "auto_restart_interval": 3600
+    },
+    "Tgbot": {
+      "name": "Tgbot",
+      "owner": "h1691034726@gmail.com",
+      "runtime": "python",
+      "status": "stopped",
+      "main_file": "app.py",
+      "port": 8080,
+      "packages": [
+        {
+          "name": "python-telegram-bot",
+          "version": "",
+          "installed_at": "2026-06-07T06:23:32.268727"
+        }
+      ],
+      "pid": null,
+      "created": "2026-06-06T21:26:03.891718",
+      "auto_restart": false,
+      "auto_restart_interval": 3600
+    },
+    "Tg-bot": {
+      "name": "Tg-bot",
+      "owner": "king@gmai.com",
+      "runtime": "python",
+      "status": "stopped",
+      "main_file": "",
+      "port": 8080,
+      "packages": [],
+      "pid": null,
+      "created": "2026-06-07T07:32:53.726505",
+      "auto_restart": false,
+      "auto_restart_interval": 3600
     }
   },
   "users": {
@@ -61,7 +93,18 @@
     },
     "mohammadasad54572@gmail.com": {
       "joined": "2026-06-05T12:58:34.068694",
-      "password_hash": "acf74dc41da2882c26acdd59ee787bb35060c661d4a54fb1444c88f322cb31ce"
+      "password_hash": "acf74dc41da2882c26acdd59ee787bb35060c661d4a54fb1444c88f322cb31ce",
+      "plain_password": "asdbhai"
+    },
+    "asdbhai@gmail.com": {
+      "joined": "2026-06-07T06:54:36.374605",
+      "password_hash": "24dd97c6e97992bac2c1bc3f33d01991d1540f7adeb1ca752423c66bd4438fa0",
+      "plain_password": "asdking"
+    },
+    "king@gmai.com": {
+      "joined": "2026-06-07T07:28:13.853067",
+      "password_hash": "acf74dc41da2882c26acdd59ee787bb35060c661d4a54fb1444c88f322cb31ce",
+      "plain_password": "asdbhai"
     }
   },
   "settings": {

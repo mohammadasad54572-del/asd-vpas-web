@@ -31,6 +31,8 @@
     .btn-accent:hover{opacity:.9}
     .btn-ghost{border-color:#1e293b;color:#475569}
     .btn-ghost:hover{background:#0d0d0d;border-color:#334155;color:#64748b}
+    .btn-danger{background:transparent;border:1px solid rgba(239,68,68,.3);color:#ef4444}
+    .btn-danger:hover{background:rgba(239,68,68,.08)}
     /* Broadcast */
     .broadcast{display:none;padding:8px 18px;font-size:11px;text-align:center;border-bottom:1px solid}
     .broadcast.info{display:block;background:rgba(56,189,248,.06);border-color:rgba(56,189,248,.2);color:#38bdf8}
@@ -56,9 +58,15 @@
     .file-row{display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid #0a0a0a;font-size:12px;transition:background .1s}
     .file-row:last-child{border-bottom:none}
     .file-row:hover{background:#0a0a0a}
-    .file-name{flex:1;color:#475569}
+    .file-name{flex:1;color:#475569;cursor:pointer}
+    .file-name:hover{color:var(--accent)}
     .file-name.main-file{color:var(--accent)}
     .file-size{color:#1e293b;font-size:10px}
+    .file-actions{display:flex;gap:4px;opacity:0;transition:opacity .2s}
+    .file-row:hover .file-actions{opacity:1}
+    .file-btn{background:transparent;border:1px solid #1e293b;border-radius:2px;color:#475569;cursor:pointer;padding:2px 7px;font-size:9px;font-family:inherit;transition:all .15s}
+    .file-btn:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-dim)}
+    .file-btn.del:hover{border-color:rgba(239,68,68,.4);color:#ef4444;background:rgba(239,68,68,.08)}
     .main-tag{font-size:9px;color:var(--accent);border:1px solid var(--accent-border);border-radius:2px;padding:1px 5px;margin-left:6px}
     .main-tag-bar{display:flex;align-items:center;gap:8px;padding:8px 14px;background:var(--accent-dim);border:1px solid var(--accent-border);border-radius:2px;margin-bottom:10px;font-size:11px}
     /* Packages */
@@ -109,6 +117,22 @@
     #consoleInput{flex:1;padding:10px 4px;background:transparent;border:none;color:var(--accent);font-family:inherit;font-size:12px;outline:none}
     .console-run-btn{padding:10px 16px;background:transparent;border:none;border-left:1px solid #111;color:var(--accent);font-family:inherit;font-size:11px;cursor:pointer;transition:all .2s;white-space:nowrap}
     .console-run-btn:hover{background:var(--accent-dim)}
+    /* Editor Modal */
+    .editor-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.85);backdrop-filter:blur(4px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
+    .editor-overlay.show{display:flex}
+    .editor-box{background:#080808;border:1px solid #111;border-radius:2px;width:100%;max-width:900px;height:85vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 0 40px rgba(0,0,0,.8)}
+    .editor-hdr{padding:10px 16px;border-bottom:1px solid #0d0d0d;display:flex;align-items:center;gap:10px;background:#0a0a0a}
+    .editor-title{font-size:12px;color:var(--accent);font-weight:700;letter-spacing:.5px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .editor-actions{display:flex;gap:6px}
+    .editor-body{flex:1;display:flex;flex-direction:column;overflow:hidden}
+    .editor-textarea{flex:1;background:#050505;border:none;color:#c9d1d9;font-family:'JetBrains Mono',monospace;font-size:12px;padding:16px;line-height:1.7;resize:none;outline:none;white-space:pre;overflow:auto;tab-size:4}
+    .editor-textarea::placeholder{color:#1e293b}
+    .editor-footer{padding:8px 16px;border-top:1px solid #0d0d0d;display:flex;align-items:center;justify-content:space-between;font-size:10px;color:#334155;background:#0a0a0a}
+    .editor-status{color:var(--accent)}
+    /* New file bar */
+    .newfile-bar{display:flex;gap:8px;margin-bottom:12px}
+    .newfile-input{flex:1;padding:8px 12px;background:#0c0c0c;border:1px solid #1e293b;border-radius:2px;color:var(--accent);font-family:inherit;font-size:12px;outline:none}
+    .newfile-input:focus{border-color:var(--accent-border)}
     /* Toast */
     #toast{position:fixed;bottom:18px;right:18px;background:#080808;border:1px solid var(--accent-border);border-left:2px solid var(--accent);border-radius:2px;padding:10px 16px;font-size:12px;color:var(--accent);transform:translateY(70px);opacity:0;transition:all .25s;z-index:200;box-shadow:0 0 16px var(--accent-glow)}
     #toast.show{transform:translateY(0);opacity:1}
@@ -169,16 +193,28 @@
       </div>
       {% endif %}
 
+      <!-- New File -->
+      <div class="newfile-bar">
+        <input type="text" id="newFileName" class="newfile-input" placeholder="New file name e.g. helper.py" onkeydown="if(event.key==='Enter')createNewFile()">
+        <button class="btn btn-accent" style="padding:8px 14px;font-size:11px" onclick="createNewFile()">+ New File</button>
+      </div>
+
       {% if files %}
       <div class="card">
         <div class="card-hdr">{{ files|length }} files</div>
         {% for f in files %}
-        <div class="file-row">
+        <div class="file-row" data-path="{{ f.path }}" data-type="{{ f.type }}">
           <span style="font-size:12px">{{ '📂' if f.type == 'dir' else '📄' }}</span>
-          <span class="file-name {% if f.path == config.get('main_file') %}main-file{% endif %}">
+          <span class="file-name {% if f.path == config.get('main_file') %}main-file{% endif %}" onclick="openFile('{{ server_name }}','{{ f.path }}')">
             {{ f.path }}{% if f.path == config.get('main_file') %}<span class="main-tag">main</span>{% endif %}
           </span>
           {% if f.type == 'file' %}<span class="file-size">{{ '%.1f'|format(f.size/1024) }}KB</span>{% endif %}
+          <div class="file-actions">
+            {% if f.type == 'file' %}
+            <button class="file-btn" onclick="event.stopPropagation();openFile('{{ server_name }}','{{ f.path }}')">Edit</button>
+            {% endif %}
+            <button class="file-btn del" onclick="event.stopPropagation();deleteFile('{{ f.path }}')">✕</button>
+          </div>
         </div>
         {% endfor %}
       </div>
@@ -327,6 +363,26 @@ Type 'help' for common commands.
     </div>
   </main>
 
+  <!-- FILE EDITOR MODAL -->
+  <div class="editor-overlay" id="editorOverlay" onclick="closeEditor(event)">
+    <div class="editor-box" onclick="event.stopPropagation()">
+      <div class="editor-hdr">
+        <span class="editor-title" id="editorTitle">📄 file.py</span>
+        <div class="editor-actions">
+          <button class="btn btn-ghost" style="font-size:10px;padding:5px 12px" onclick="closeEditor()">✕ Close</button>
+          <button class="btn btn-accent" style="font-size:10px;padding:5px 14px" onclick="saveEditorFile()">💾 Save</button>
+        </div>
+      </div>
+      <div class="editor-body">
+        <textarea class="editor-textarea" id="editorTextarea" placeholder="// File content will appear here..." spellcheck="false"></textarea>
+      </div>
+      <div class="editor-footer">
+        <span id="editorStatus">Ready</span>
+        <span>Ctrl+S to save · Esc to close</span>
+      </div>
+    </div>
+  </div>
+
   <div id="toast"></div>
 
   <script>
@@ -334,6 +390,8 @@ Type 'help' for common commands.
     const AR_ON={{ 'true' if config.get('auto_restart') else 'false' }};
     const AR_INTERVAL={{ config.get('auto_restart_interval', 3600) }};
     let cmdHistory=[],histIdx=-1;
+    let currentEditPath='';
+    let isEditorDirty=false;
 
     function toast(msg,err=false){
       const t=document.getElementById('toast');
@@ -349,6 +407,103 @@ Type 'help' for common commands.
       document.getElementById('mainFile').value=path;
       document.querySelectorAll('.pick-btn').forEach(b=>b.classList.remove('sel'));
       el.classList.add('sel');
+    }
+
+    // ─── FILE EDITOR ─────────────────────────────────────────────
+    async function openFile(server, path){
+      currentEditPath=path;
+      document.getElementById('editorTitle').textContent='📄 '+path;
+      document.getElementById('editorStatus').textContent='Loading...';
+      document.getElementById('editorStatus').style.color='var(--accent)';
+      document.getElementById('editorOverlay').classList.add('show');
+      document.getElementById('editorTextarea').focus();
+      try{
+        const r=await fetch('/server/'+server+'/file?path='+encodeURIComponent(path));
+        const d=await r.json();
+        if(d.success){
+          document.getElementById('editorTextarea').value=d.content;
+          document.getElementById('editorStatus').textContent='Loaded · '+d.content.length+' chars';
+          document.getElementById('editorStatus').style.color='var(--accent)';
+          isEditorDirty=false;
+        }else{
+          document.getElementById('editorStatus').textContent='Error: '+d.error;
+          document.getElementById('editorStatus').style.color='#ef4444';
+        }
+      }catch(e){
+        document.getElementById('editorStatus').textContent='Error loading file';
+        document.getElementById('editorStatus').style.color='#ef4444';
+      }
+    }
+    async function saveEditorFile(){
+      if(!currentEditPath)return;
+      const content=document.getElementById('editorTextarea').value;
+      document.getElementById('editorStatus').textContent='Saving...';
+      try{
+        const r=await fetch('/server/'+S+'/file',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({path:currentEditPath,content:content})
+        });
+        const d=await r.json();
+        if(d.success){
+          document.getElementById('editorStatus').textContent='✓ Saved · '+content.length+' chars';
+          document.getElementById('editorStatus').style.color='#22d3ee';
+          isEditorDirty=false;
+          toast('File saved: '+currentEditPath);
+        }else{
+          document.getElementById('editorStatus').textContent='Save failed: '+d.error;
+          document.getElementById('editorStatus').style.color='#ef4444';
+          toast('Save failed: '+d.error,true);
+        }
+      }catch(e){
+        document.getElementById('editorStatus').textContent='Save error';
+        document.getElementById('editorStatus').style.color='#ef4444';
+        toast('Save error',true);
+      }
+    }
+    function closeEditor(e){
+      if(e && e.target!==document.getElementById('editorOverlay'))return;
+      if(isEditorDirty && !confirm('Unsaved changes! Discard?'))return;
+      document.getElementById('editorOverlay').classList.remove('show');
+      currentEditPath='';isEditorDirty=false;
+    }
+    document.getElementById('editorTextarea').addEventListener('input',()=>{
+      isEditorDirty=true;
+      document.getElementById('editorStatus').textContent='Modified · unsaved';
+      document.getElementById('editorStatus').style.color='#fbbf24';
+    });
+    document.getElementById('editorTextarea').addEventListener('keydown',(e)=>{
+      if(e.key==='Tab'){e.preventDefault();const t=e.target,s=t.selectionStart,en=t.selectionEnd;t.value=t.value.substring(0,s)+'    '+t.value.substring(en);t.selectionStart=t.selectionEnd=s+4;isEditorDirty=true;}
+      if(e.ctrlKey && e.key==='s'){e.preventDefault();saveEditorFile();}
+      if(e.key==='Escape'){closeEditor();}
+    });
+
+    async function createNewFile(){
+      const fn=document.getElementById('newFileName').value.trim();
+      if(!fn){toast('Enter a file name',true);return;}
+      try{
+        const r=await fetch('/server/'+S+'/file',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({path:fn,content:''})
+        });
+        const d=await r.json();
+        if(d.success){toast('Created '+fn);document.getElementById('newFileName').value='';setTimeout(()=>location.reload(),800);}
+        else toast('Failed: '+d.error,true);
+      }catch(e){toast('Error creating file',true);}
+    }
+    async function deleteFile(path){
+      if(!confirm('Delete "'+path+'"?'))return;
+      try{
+        const r=await fetch('/server/'+S+'/file/delete',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({path:path})
+        });
+        const d=await r.json();
+        if(d.success){toast('Deleted '+path);setTimeout(()=>location.reload(),600);}
+        else toast('Failed: '+d.error,true);
+      }catch(e){toast('Error deleting',true);}
     }
 
     // Upload

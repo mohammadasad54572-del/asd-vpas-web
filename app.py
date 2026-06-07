@@ -27,14 +27,12 @@ SERVERS_DIR.mkdir(exist_ok=True)
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "ASD9090")
 CF_SITE_KEY   = os.environ.get("CF_TURNSTILE_SITE_KEY", "")
 CF_SECRET_KEY = os.environ.get("CF_TURNSTILE_SECRET_KEY", "")
-ADMIN_PATH    = os.environ.get("ADMIN_PATH", "MODx")   # (DONT CHANGE ADMIN PATH IF CHAMGE WEBSITE WILL BREAK AMD NOT WORK) secret URL segment
+ADMIN_PATH    = os.environ.get("ADMIN_PATH", "ASDx")
 SITE_NAME     = "ASD-X VPS"
 
 RUNNING_PROCESSES  = {}
 AUTO_RESTART_TIMERS = {}
 
-
-# ─── Data helpers ─────────────────────────────────────────────────────────────
 
 def load_data():
     if DATA_FILE.exists():
@@ -59,8 +57,6 @@ def hash_password(p):
     return hashlib.sha256(p.encode()).hexdigest()
 
 
-# ─── Context processor — inject theme/broadcast into every template ───────────
-
 @app.context_processor
 def inject_globals():
     data = load_data()
@@ -73,8 +69,6 @@ def inject_globals():
         "cf_site_key":  CF_SITE_KEY,
     }
 
-
-# ─── Cloudflare Turnstile ─────────────────────────────────────────────────────
 
 def verify_turnstile(token):
     if not CF_SECRET_KEY:
@@ -90,8 +84,6 @@ def verify_turnstile(token):
     except Exception:
         return True
 
-
-# ─── Auth decorators ──────────────────────────────────────────────────────────
 
 def login_required(f):
     @wraps(f)
@@ -114,8 +106,6 @@ def admin_required(f):
         return f(*args, **kwargs)
     return decorated
 
-
-# ─── Process helpers ──────────────────────────────────────────────────────────
 
 def is_process_alive(pid):
     try:
@@ -154,8 +144,6 @@ def _sync_process_status():
 
 _sync_process_status()
 
-
-# ─── Auto-restart ─────────────────────────────────────────────────────────────
 
 def _do_auto_restart(name):
     data = load_data()
@@ -224,8 +212,6 @@ def _restore_auto_restarts():
 _restore_auto_restarts()
 
 
-# ─── Package auto-detection ───────────────────────────────────────────────────
-
 def detect_and_install_packages(name, extract_dir):
     installed, errors = [], []
     req_file = extract_dir / "requirements.txt"
@@ -257,8 +243,6 @@ def detect_and_install_packages(name, extract_dir):
         except Exception as e: errors.append(str(e))
     return installed, errors
 
-
-# ─── Auth routes ──────────────────────────────────────────────────────────────
 
 @app.route("/")
 def index():
@@ -298,8 +282,6 @@ def logout():
     session.clear(); return redirect(url_for("login"))
 
 
-# ─── Dashboard ────────────────────────────────────────────────────────────────
-
 @app.route("/dashboard")
 @login_required
 def dashboard():
@@ -318,8 +300,6 @@ def dashboard():
                            running=running, total=len(user_servers), username=username)
 
 
-# ─── System stats ─────────────────────────────────────────────────────────────
-
 @app.route("/api/stats")
 @login_required
 def system_stats():
@@ -328,8 +308,6 @@ def system_stats():
     disk = psutil.disk_usage("/").percent
     return jsonify({"cpu": cpu, "ram": ram, "disk": disk})
 
-
-# ─── Server management ────────────────────────────────────────────────────────
 
 @app.route("/server/create", methods=["POST"])
 @login_required
@@ -395,8 +373,6 @@ def list_files(directory, base=""):
     return result
 
 
-# ─── Upload ───────────────────────────────────────────────────────────────────
-
 @app.route("/server/<name>/upload", methods=["POST"])
 @login_required
 def upload_file(name):
@@ -441,8 +417,6 @@ def auto_install(name):
     return jsonify({"success": True, "installed": installed, "errors": errors})
 
 
-# ─── Console ──────────────────────────────────────────────────────────────────
-
 @app.route("/server/<name>/console", methods=["POST"])
 @login_required
 def console_exec(name):
@@ -466,8 +440,6 @@ def console_exec(name):
     except Exception as e:
         return jsonify({"output": "", "error": str(e), "code": -1})
 
-
-# ─── Packages ─────────────────────────────────────────────────────────────────
 
 @app.route("/server/<name>/packages/install", methods=["POST"])
 @login_required
@@ -508,8 +480,6 @@ def remove_package(name):
     return jsonify({"success": True})
 
 
-# ─── Settings ─────────────────────────────────────────────────────────────────
-
 @app.route("/server/<name>/settings", methods=["POST"])
 @login_required
 def save_settings(name):
@@ -528,7 +498,71 @@ def save_settings(name):
     return jsonify({"success": True})
 
 
-# ─── Start / Stop ─────────────────────────────────────────────────────────────
+# ─── File Editor ──────────────────────────────────────────────────────────────
+
+@app.route("/server/<name>/file", methods=["GET"])
+@login_required
+def get_file_content(name):
+    data = load_data(); cfg = data["servers"].get(name)
+    if not cfg: return jsonify({"success": False, "error": "Not found"}), 404
+    if cfg.get("owner") != session["username"]:
+        return jsonify({"success": False, "error": "Access denied"}), 403
+    file_path = request.args.get("path", "")
+    if not file_path: return jsonify({"success": False, "error": "Path required"}), 400
+    safe_path = (SERVERS_DIR / name / "extracted" / file_path).resolve()
+    base = (SERVERS_DIR / name / "extracted").resolve()
+    if not str(safe_path).startswith(str(base)) or not safe_path.exists() or safe_path.is_dir():
+        return jsonify({"success": False, "error": "File not found"}), 404
+    try:
+        content = safe_path.read_text(encoding="utf-8", errors="replace")
+        return jsonify({"success": True, "content": content, "path": file_path})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+
+@app.route("/server/<name>/file", methods=["POST"])
+@login_required
+def save_file_content(name):
+    data = load_data(); cfg = data["servers"].get(name)
+    if not cfg: return jsonify({"success": False, "error": "Not found"}), 404
+    if cfg.get("owner") != session["username"]:
+        return jsonify({"success": False, "error": "Access denied"}), 403
+    payload = request.get_json()
+    file_path = payload.get("path", "")
+    content = payload.get("content", "")
+    if not file_path: return jsonify({"success": False, "error": "Path required"}), 400
+    safe_path = (SERVERS_DIR / name / "extracted" / file_path).resolve()
+    base = (SERVERS_DIR / name / "extracted").resolve()
+    if not str(safe_path).startswith(str(base)):
+        return jsonify({"success": False, "error": "Invalid path"}), 400
+    try:
+        safe_path.parent.mkdir(parents=True, exist_ok=True)
+        safe_path.write_text(content, encoding="utf-8")
+        return jsonify({"success": True, "path": file_path})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+
+@app.route("/server/<name>/file/delete", methods=["POST"])
+@login_required
+def delete_file(name):
+    data = load_data(); cfg = data["servers"].get(name)
+    if not cfg: return jsonify({"success": False, "error": "Not found"}), 404
+    if cfg.get("owner") != session["username"]:
+        return jsonify({"success": False, "error": "Access denied"}), 403
+    file_path = (request.get_json() or {}).get("path", "")
+    if not file_path: return jsonify({"success": False, "error": "Path required"}), 400
+    safe_path = (SERVERS_DIR / name / "extracted" / file_path).resolve()
+    base = (SERVERS_DIR / name / "extracted").resolve()
+    if not str(safe_path).startswith(str(base)) or not safe_path.exists():
+        return jsonify({"success": False, "error": "File not found"}), 404
+    try:
+        if safe_path.is_dir():
+            shutil.rmtree(safe_path)
+        else:
+            safe_path.unlink()
+        return jsonify({"success": True})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+
 
 @app.route("/server/<name>/start", methods=["POST"])
 @login_required
@@ -590,8 +624,6 @@ def stop_server(name):
     return jsonify({"success": True})
 
 
-# ─── Logs ─────────────────────────────────────────────────────────────────────
-
 @app.route("/server/<name>/logs")
 @login_required
 def get_logs(name):
@@ -615,10 +647,8 @@ def clear_logs(name):
     return jsonify({"success": True})
 
 
-# ─── Admin routes (secret path) ───────────────────────────────────────────────
-
 def _admin_routes(app):
-    ap = ADMIN_PATH   # e.g. "MODx"
+    ap = ADMIN_PATH
 
     @app.route(f"/{ap}/login", methods=["GET", "POST"])
     def admin_login():
