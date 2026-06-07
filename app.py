@@ -27,7 +27,7 @@ SERVERS_DIR.mkdir(exist_ok=True)
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "ASD9090")
 CF_SITE_KEY   = os.environ.get("CF_TURNSTILE_SITE_KEY", "")
 CF_SECRET_KEY = os.environ.get("CF_TURNSTILE_SECRET_KEY", "")
-ADMIN_PATH    = os.environ.get("ADMIN_PATH", "ASDx")
+ADMIN_PATH    = os.environ.get("ADMIN_PATH", "MODx")   # (DONT CHANGE ADMIN PATH IF CHAMGE WEBSITE WILL BREAK AMD NOT WORK) secret URL segment
 SITE_NAME     = "ASD-X VPS"
 
 RUNNING_PROCESSES  = {}
