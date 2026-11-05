@@ -1,0 +1,96 @@
+project/
+│
+├── app.py                          ← aiohttp main server (routes register করে)
+├── jwt.py                          ← JWT generator (already done)
+│
+├── frontend/
+│   ├── client.html
+│   ├── landing.html
+│   ├── login.html
+│   ├── css/
+│   │   └── client.css, login.css
+│   └── js/
+│       ├── script.js
+│       └── login.js
+│
+├── groups/                         ← team JSON files (already exists)
+├── group_XXXXX_jwt.json           ← JWT cache files
+├── token_cache.json
+├── devices.json
+│
+└── rasin-data/
+    ├── __init__.py
+    │
+    ├── database.py                 ← MongoDB connection, db instance
+    │
+    ├── models/
+    │   ├── __init__.py
+    │   ├── user.py                 ← User model (username, password_hash, basic_credits, premium_credits, max_groups, role => member/admin (if admin => admin can generate coupon, admin has super power))
+    │   ├── group.py                ← Group model (group_id, clan_id, region, owner, status, created_at, extend_count, games_played, last_match_at, run_segments, replace_log, squad_file_enabled, squad_downloaded, can_extend, can_replace)
+    │   ├── transaction.py          ← Transaction model (id, user, basic_credits, premium_credits, amount, order_id, status, admin_note, old/new balances, created_at)
+    │   ├── coupon.py               ← Coupon model (code, created_by, used_by, basic_credits, premium_credits, status, created_at, used_at)
+    │   ├── activity_log.py         ← ActivityLog model (user, group_id, clan_id, action, details, timestamp)
+    │   ├── inbox_message.py        ← InboxMessage model (user, title, content, type, is_read, created_at)
+    │   ├── alert.py                ← Alert model (title, message, type, is_active, created_at)
+    │   ├── notification.py         ← Notification model (user, title, message, type, seen, created_at)
+    │   ├── push_subscription.py    ← PushSubscription model (user, endpoint, keys)
+    │   └── pricing.py              ← PricingConfig model (basic_credit_usd, premium_credit_usd, binance_pay_id, regions[], telegram_offer)
+    │
+    ├── auth.py                     ← /api/auth/* handlers
+    │   #  POST /api/auth/login
+    │   #  POST /api/auth/logout
+    │   #  GET  /api/auth/me
+    │   #  POST /api/auth/change-password
+    │   #  POST /api/auth/signup (admin only)
+    │
+    ├── client.py                   ← /api/client/* handlers
+    │   #  POST /api/client/auto-clan-group     ← launch group (deduct credit, call app.py create_four_accounts)
+    │   #  GET  /api/client/my-groups
+    │   #  POST /api/client/group-action        ← stop/delete/restart/get-glory/get-clan-info/change-nickname
+    │   #  POST /api/client/group/extend
+    │   #  POST /api/client/group/replace
+    │   #  GET  /api/client/squad-file
+    │   #  GET  /api/client/activity-log
+    │   #  GET  /api/client/active-alert
+    │   #  POST /api/client/dismiss-alert
+    │   #  GET  /api/client/notifications
+    │   #  GET  /api/client/glory-progression
+    │   #  GET  /api/client/refetch-clan-data
+    │
+    ├── transaction.py              ← /api/client/buy-credits, transactions list, cancel, update order id
+    │   #  POST /api/client/buy-credits
+    │   #  GET  /api/client/transactions
+    │   #  POST /api/client/cancel-transaction
+    │   #  POST /api/client/update-transaction-order-id
+    │
+    ├── coupon.py                   ← /api/client/coupon handlers
+    │   #  POST /api/client/create-coupon
+    │   #  POST /api/client/redeem-coupon
+    │   #  GET  /api/client/my-coupons
+    │   #  POST /api/client/cancel-coupon
+    │   #  GET  /api/client/redeemed-coupons
+    │
+    ├── inbox.py                    ← /api/inbox/* handlers
+    │   #  GET  /api/inbox/messages
+    │   #  POST /api/inbox/mark-read
+    │   #  POST /api/inbox/mark-all-read
+    │   #  POST /api/inbox/dismiss
+    │
+    ├── push.py                     ← /api/push/* handlers
+    │   #  GET  /api/push/vapid-public-key
+    │   #  POST /api/push/subscribe
+    │   #  POST /api/push/unsubscribe
+    │
+    ├── public.py                   ← no-auth routes
+    │   #  GET  /api/pricing
+    │   #  GET  /api/public/contact-info
+    │   #  GET  /api/telegram-offer
+    │
+    ├── middleware.py               ← auth check, rate limiting, session validation
+    │   #  require_auth(request) → user or 401
+    │   #  rate_limit(ip, route)
+    │   #  session store (MongoDB বা in-memory)
+    │
+    └── admin.py  # users list/edit/delete, tx approve/reject, coupon generate, send inbox msg, create alert, pricing config, stats 
+
+    
