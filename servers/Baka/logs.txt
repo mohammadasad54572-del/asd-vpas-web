@@ -1,0 +1,60 @@
+
+==================================================
+[2026-10-26T05:05:03.426078] Starting: python -u baka.py
+==================================================
+  File "/app/servers/Baka/extracted/baka.py", line 457
+    \~F.text.startswith("/"),   # Commands ko bilkul mat pakdo
+     ^
+SyntaxError: unexpected character after line continuation character
+
+==================================================
+[2026-10-26T05:06:30.542648] Starting: python -u baka.py
+==================================================
+2026-10-26 05:06:33,909 - __main__ - INFO - ==================================================
+2026-10-26 05:06:33,909 - __main__ - INFO - BAKA BOT LIVE!
+2026-10-26 05:06:33,909 - __main__ - INFO - Owner: 8620006563
+2026-10-26 05:06:33,909 - __main__ - INFO - ==================================================
+2026-10-26 05:06:33,910 - aiogram.dispatcher - INFO - Start polling
+2026-10-26 05:06:34,006 - aiogram.dispatcher - INFO - Run polling for bot @codexai1_bot id=8946878537 - 'BAKA BOT'
+/app/servers/Baka/extracted/baka.py:150: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "last_updated": datetime.utcnow(),
+/app/servers/Baka/extracted/baka.py:153: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "joined": datetime.utcnow(),
+2026-10-26 05:06:53,504 - httpx - INFO - HTTP Request: POST https://us-central1-ai-chat-bot-bf47e.cloudfunctions.net/chat_function_android "HTTP/1.1 200 OK"
+/app/servers/Baka/extracted/baka.py:110: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  {"$set": {"messages": history[-30:], "updated": datetime.utcnow()}},
+2026-10-26 05:06:54,063 - aiogram.event - INFO - Update id=889502774 is handled. Duration 4231 ms by bot id=8946878537
+/app/servers/Baka/extracted/baka.py:613: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  users_col.update_one({"user_id": msg.from_user.id}, {"$set": {"work_last": datetime.utcnow()}})
+2026-10-26 05:07:01,073 - aiogram.event - INFO - Update id=889502775 is handled. Duration 1168 ms by bot id=8946878537
+2026-10-26 05:07:10,712 - aiogram.event - INFO - Update id=889502776 is handled. Duration 462 ms by bot id=8946878537
+2026-10-26 05:07:16,905 - aiogram.event - INFO - Update id=889502777 is handled. Duration 351 ms by bot id=8946878537
+2026-10-26 05:07:19,385 - aiogram.event - INFO - Update id=889502778 is handled. Duration 358 ms by bot id=8946878537
+2026-10-26 05:07:27,055 - aiogram.event - INFO - Update id=889502779 is handled. Duration 779 ms by bot id=8946878537
+2026-10-26 05:07:43,235 - aiogram.event - INFO - Update id=889502780 is handled. Duration 958 ms by bot id=8946878537
+2026-10-26 05:07:47,928 - aiogram.event - INFO - Update id=889502781 is handled. Duration 409 ms by bot id=8946878537
+2026-10-26 05:07:54,587 - httpx - INFO - HTTP Request: POST https://us-central1-ai-chat-bot-bf47e.cloudfunctions.net/chat_function_android "HTTP/1.1 200 OK"
+2026-10-26 05:07:55,165 - aiogram.event - INFO - Update id=889502782 is handled. Duration 2963 ms by bot id=8946878537
+2026-10-26 05:08:12,377 - aiogram.event - INFO - Update id=889502783 is handled. Duration 1018 ms by bot id=8946878537
+2026-10-26 05:08:29,020 - aiogram.event - INFO - Update id=889502784 is handled. Duration 988 ms by bot id=8946878537
+2026-10-26 05:08:45,226 - aiogram.event - INFO - Update id=889502785 is handled. Duration 564 ms by bot id=8946878537
+2026-10-26 05:08:58,297 - aiogram.event - INFO - Update id=889502786 is handled. Duration 550 ms by bot id=8946878537
+2026-10-26 05:09:10,278 - httpx - INFO - HTTP Request: POST https://us-central1-ai-chat-bot-bf47e.cloudfunctions.net/chat_function_android "HTTP/1.1 200 OK"
+2026-10-26 05:09:10,861 - aiogram.event - INFO - Update id=889502787 is handled. Duration 2702 ms by bot id=8946878537
+/app/servers/Baka/extracted/baka.py:626: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  users_col.update_one({"user_id": msg.from_user.id}, {"$set": {"crime_last": datetime.utcnow()}})
+2026-10-26 05:10:00,004 - aiogram.event - INFO - Update id=889502788 is handled. Duration 1215 ms by bot id=8946878537
+2026-10-26 12:23:18,378 - aiogram.event - INFO - Update id=889502789 is handled. Duration 1 ms by bot id=8946878537
+2026-10-26 12:23:21,073 - aiogram.event - INFO - Update id=889502790 is handled. Duration 921 ms by bot id=8946878537
+2026-10-26 13:04:04,773 - aiogram.event - INFO - Update id=889502791 is handled. Duration 1013 ms by bot id=8946878537
+2026-10-26 13:04:14,527 - aiogram.event - INFO - Update id=889502792 is handled. Duration 1 ms by bot id=8946878537
+2026-10-26 13:04:18,303 - aiogram.event - INFO - Update id=889502793 is handled. Duration 756 ms by bot id=8946878537
+2026-10-26 13:04:22,497 - httpx - INFO - HTTP Request: POST https://us-central1-ai-chat-bot-bf47e.cloudfunctions.net/chat_function_android "HTTP/1.1 200 OK"
+2026-10-26 13:04:23,018 - aiogram.event - INFO - Update id=889502794 is handled. Duration 2502 ms by bot id=8946878537
+2026-10-26 13:04:26,927 - httpx - INFO - HTTP Request: POST https://us-central1-ai-chat-bot-bf47e.cloudfunctions.net/chat_function_android "HTTP/1.1 200 OK"
+2026-10-26 13:04:27,467 - aiogram.event - INFO - Update id=889502795 is handled. Duration 2438 ms by bot id=8946878537
+2026-10-26 13:04:36,562 - httpx - INFO - HTTP Request: POST https://us-central1-ai-chat-bot-bf47e.cloudfunctions.net/chat_function_android "HTTP/1.1 200 OK"
+2026-10-26 13:04:37,082 - aiogram.event - INFO - Update id=889502796 is handled. Duration 2501 ms by bot id=8946878537
+2026-10-26 13:04:50,006 - httpx - INFO - HTTP Request: POST https://us-central1-ai-chat-bot-bf47e.cloudfunctions.net/chat_function_android "HTTP/1.1 200 OK"
+2026-10-26 13:04:50,546 - aiogram.event - INFO - Update id=889502797 is handled. Duration 2677 ms by bot id=8946878537
+2026-10-29 18:25:37,861 - aiogram.event - INFO - Update id=889502798 is handled. Duration 1911 ms by bot id=8946878537

@@ -1,0 +1,32 @@
+{
+  "group_id": "194877491787512",
+  "clan_id": "3055711403",
+  "region": "IND",
+  "created_at": "2026-11-04T17:42:46.571397",
+  "accounts": [
+    {
+      "nickname": "MEHEDI_8afk2",
+      "account_id": "19015991527",
+      "uid": "8407195249",
+      "password": "283AA6B8478CD953400DF79A199EBC5B412C824073286728A52ECEA917401119"
+    },
+    {
+      "nickname": "MEHEDI_igXeY",
+      "account_id": "19015992604",
+      "uid": "8407195550",
+      "password": "AC284E472D150300673AF6B51A466C7A940F78D244833D9216970998392BB601"
+    },
+    {
+      "nickname": "MEHEDI_IBcTO",
+      "account_id": "19015993709",
+      "uid": "8407195823",
+      "password": "F77EA994C4B9B4FCD1DEE8351BA8EFA5E736F2CB1E3FA495F8A3E6DB4DA7C63A"
+    },
+    {
+      "nickname": "MEHEDI_lR5Pb",
+      "account_id": "19015994638",
+      "uid": "8407196078",
+      "password": "61C4846EF166C8A9337304BADCDB8AFC682AC8ECC75BB966EE532F798DFBD94E"
+    }
+  ]
+}

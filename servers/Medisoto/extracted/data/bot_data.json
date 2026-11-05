@@ -1,0 +1,295 @@
+{
+  "firebase_accounts": [
+    {
+      "id": "fb_1792769555",
+      "name": "sk-admin-v-30-default-rt",
+      "url": "https://sk-admin-v-30-default-rtdb.firebaseio.com",
+      "key": "https://kifsssrtt-default-rtdb.firebaseio.com",
+      "added_at": "2026-10-23 15:32:35",
+      "active": true
+    },
+    {
+      "id": "fb_1792769596",
+      "name": "sk-admin-17-default-rtdb",
+      "url": "https://sk-admin-17-default-rtdb.firebaseio.com",
+      "key": "https://sk-admin-17-default-rtdb.firebaseio.com",
+      "added_at": "2026-10-23 15:33:16",
+      "active": true
+    },
+    {
+      "id": "fb_1792808081",
+      "name": "stephen-40caf-default-rt",
+      "url": "https://PROJECT-default-rtdb.firebaseio.com`",
+      "key": "https://PROJECT-default-rtdb.firebaseio.com`",
+      "added_at": "2026-10-24 02:14:41",
+      "active": true
+    },
+    {
+      "id": "fb_1792808176",
+      "name": "stephen-40caf-default-rt",
+      "url": "https://xxx-40caf-default-rtdb.firebaseio.com",
+      "key": "https://xxx-40caf-default-rtdb.firebaseio.com",
+      "added_at": "2026-10-24 02:16:16",
+      "active": true
+    },
+    {
+      "id": "fb_1792808345",
+      "name": "mkdd02-default-rtdb",
+      "url": "https://mkdd02-default-rtdb.firebaseio.com",
+      "key": "FB 1",
+      "added_at": "2026-10-24 02:19:05",
+      "active": true
+    },
+    {
+      "id": "fb_1792808359",
+      "name": "stephen-40caf-default-rt",
+      "url": "https://stephen-40caf-default-rtdb.firebaseio.com",
+      "key": "Fb 2",
+      "added_at": "2026-10-24 02:19:19",
+      "active": true
+    },
+    {
+      "id": "fb_1792808366",
+      "name": "rahul-panel-default-rtdb",
+      "url": "https://rahul-panel-default-rtdb.firebaseio.com",
+      "key": "Fb 3",
+      "added_at": "2026-10-24 02:19:26",
+      "active": true
+    },
+    {
+      "id": "fb_1792851862",
+      "name": "vuvhbjbi-default-rtdb",
+      "url": "https://vuvhbjbi-default-rtdb.firebaseio.com",
+      "key": "https://vuvhbjbi-default-rtdb.firebaseio.com",
+      "added_at": "2026-10-24 14:24:22",
+      "active": true
+    },
+    {
+      "id": "fb_1792851870",
+      "name": "puja-admin-panel-30a82-d",
+      "url": "https://puja-admin-panel-30a82-default-rtdb.firebaseio.com",
+      "key": "https://puja-admin-panel-30a82-default-rtdb.firebaseio.com",
+      "added_at": "2026-10-24 14:24:30",
+      "active": true
+    },
+    {
+      "id": "fb_1793255107",
+      "name": "2",
+      "url": "https://lali-c74e2-default-rtdb.firebaseio.com",
+      "key": "Hehe",
+      "added_at": "2026-10-29 06:25:07",
+      "active": true
+    }
+  ],
+  "users": {
+    "8650732261": {
+      "expire": 1792769551.562253,
+      "ref_count": 0,
+      "seen": true,
+      "start_bonus": true,
+      "granted_at": "2026-10-23 15:22:31"
+    },
+    "1430531834": {
+      "expire": 0,
+      "ref_count": 0,
+      "seen": true
+    },
+    "8689943405": {
+      "expire": 1792788394.5156007,
+      "ref_count": 0,
+      "seen": true,
+      "start_bonus": true,
+      "granted_at": "2026-10-23 20:36:34"
+    },
+    "8745918874": {
+      "expire": 1792788397.1636448,
+      "ref_count": 0,
+      "seen": true,
+      "start_bonus": true,
+      "granted_at": "2026-10-23 20:36:37"
+    },
+    "8205427604": {
+      "expire": 1792810291.222818,
+      "ref_count": 0,
+      "seen": true,
+      "start_bonus": true,
+      "granted_at": "2026-10-24 01:51:31"
+    },
+    "1481554288": {
+      "expire": 1792895350.006484,
+      "ref_count": 0,
+      "seen": true,
+      "start_bonus": true,
+      "granted_at": "2026-10-25 01:29:10"
+    },
+    "6285711659": {
+      "expire": 1792903770.4723654,
+      "granted_at": "2026-10-25 03:49:30",
+      "referrer": null,
+      "ref_count": 1
+    },
+    "8832705645": {
+      "expire": 1792903771.0352547,
+      "ref_count": 0,
+      "referrer": 6285711659,
+      "seen": true,
+      "ref_at": "2026-10-25 03:49:30",
+      "granted_at": "2026-10-25 03:49:31",
+      "start_bonus": true
+    },
+    "8434594369": {
+      "expire": 1793069131.3343925,
+      "ref_count": 0,
+      "seen": true,
+      "start_bonus": true,
+      "granted_at": "2026-10-27 01:45:31"
+    },
+    "6346795447": {
+      "expire": 0,
+      "ref_count": 0,
+      "seen": true
+    },
+    "8946498926": {
+      "expire": 0,
+      "ref_count": 0,
+      "seen": true
+    }
+  },
+  "referrals": {
+    "6285711659": [
+      8832705645
+    ]
+  },
+  "settings": {
+    "page_size": 6,
+    "force_channel": "",
+    "force_channel_link": "",
+    "referral_hours": 1,
+    "start_bonus_minutes": 60.0,
+    "force_channels": [
+      {
+        "id": "ch_1793090016",
+        "title": "ONLY DEVLOPER",
+        "chat_id": -1004447621713,
+        "username": "-1004447621713",
+        "link": "https://t.me/+RzXzJkVLK40xMTFl",
+        "mode": "request"
+      }
+    ]
+  },
+  "stats": {
+    "total_otps": 0,
+    "total_devices": 2166
+  },
+  "join_requests": {
+    "-1004447621713": [
+      8946498926
+    ],
+    "-1003869849710": [
+      8552482936,
+      7192964050,
+      5975645269,
+      8474189513,
+      7609263409,
+      8740162706,
+      8636647957,
+      8916955457,
+      8603680483,
+      5337528585,
+      8886219441,
+      7145380245,
+      8183115533,
+      8165724497,
+      8924451241,
+      8186139348,
+      7731385675,
+      5579476674,
+      6320870476,
+      8674754064,
+      6802993019,
+      2129996334,
+      8491231623,
+      1912415553
+    ],
+    "-1004479551144": [
+      7192964050,
+      7609263409,
+      5975645269,
+      8474189513,
+      8740162706,
+      8636647957,
+      8916955457,
+      8603680483,
+      6320870476,
+      5337528585,
+      6663305030,
+      8886219441,
+      7145380245,
+      8183115533,
+      8165724497,
+      8924451241,
+      8186139348,
+      7731385675,
+      5579476674,
+      8674754064,
+      6802993019,
+      2129996334,
+      8491231623,
+      1912415553,
+      8856557437
+    ],
+    "-1004426519345": [
+      7192964050,
+      8474189513,
+      5975645269,
+      7609263409,
+      8740162706,
+      8636647957,
+      8916955457,
+      8603680483,
+      5337528585,
+      6663305030,
+      8886219441,
+      7145380245,
+      8183115533,
+      8165724497,
+      8924451241,
+      8186139348,
+      7731385675,
+      5579476674,
+      6320870476,
+      8674754064,
+      6802993019,
+      2129996334,
+      8491231623,
+      8856557437
+    ],
+    "-1003962970654": [
+      7192964050,
+      7609263409,
+      5975645269,
+      8474189513,
+      8740162706,
+      8636647957,
+      8916955457,
+      8603680483,
+      5337528585,
+      6663305030,
+      8886219441,
+      7145380245,
+      8183115533,
+      8165724497,
+      8924451241,
+      8186139348,
+      7731385675,
+      5579476674,
+      6320870476,
+      8674754064,
+      6802993019,
+      2129996334,
+      8491231623,
+      1912415553,
+      8856557437
+    ]
+  }
+}

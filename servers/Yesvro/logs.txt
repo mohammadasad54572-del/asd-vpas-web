@@ -1,0 +1,41 @@
+
+==================================================
+[2026-10-19T06:38:33.290141] Starting: python -u main-1.py
+==================================================
+2026-10-19 06:38:40,108 - __main__ - INFO - Loaded 0 clones from DB
+2026-10-19 06:38:40,323 - __main__ - INFO - ASD AI Bot - live
+2026-10-19 06:38:40,323 - aiogram.dispatcher - INFO - Start polling
+2026-10-19 06:38:40,423 - aiogram.dispatcher - INFO - Run polling for bot @asdpawarai_bot id=8604487997 - 'PAWAR AI'
+2026-10-19 06:38:41,652 - aiogram.event - INFO - Update id=297206324 is handled. Duration 1006 ms by bot id=8604487997
+2026-10-19 06:38:44,414 - aiogram.event - INFO - Update id=297206325 is handled. Duration 565 ms by bot id=8604487997
+2026-10-19 06:38:47,859 - aiogram.event - INFO - Update id=297206326 is handled. Duration 499 ms by bot id=8604487997
+2026-10-19 06:38:50,272 - aiogram.event - INFO - Update id=297206327 is handled. Duration 802 ms by bot id=8604487997
+2026-10-19 06:38:54,468 - httpx - INFO - HTTP Request: POST https://cute-bangla-voice-bot.lovable.app/api/public/tts "HTTP/1.1 502 Bad Gateway"
+2026-10-19 06:38:54,468 - __main__ - ERROR - TTS failed: Voice generation failed
+2026-10-19 06:38:54,759 - aiogram.event - INFO - Update id=297206328 is handled. Duration 3165 ms by bot id=8604487997
+2026-10-19 06:38:57,954 - aiogram.event - INFO - Update id=297206329 is handled. Duration 762 ms by bot id=8604487997
+2026-10-19 06:39:00,241 - aiogram.event - INFO - Update id=297206330 is handled. Duration 545 ms by bot id=8604487997
+2026-10-19 06:39:05,546 - aiogram.event - INFO - Update id=297206331 is handled. Duration 803 ms by bot id=8604487997
+2026-10-19 06:39:09,866 - httpx - INFO - HTTP Request: POST https://cute-bangla-voice-bot.lovable.app/api/public/tts "HTTP/1.1 502 Bad Gateway"
+2026-10-19 06:39:09,867 - __main__ - ERROR - TTS failed: Voice generation failed
+2026-10-19 06:39:10,169 - aiogram.event - INFO - Update id=297206332 is handled. Duration 2229 ms by bot id=8604487997
+2026-10-19 06:39:13,989 - httpx - INFO - HTTP Request: POST https://cute-bangla-voice-bot.lovable.app/api/public/tts "HTTP/1.1 502 Bad Gateway"
+2026-10-19 06:39:13,990 - __main__ - ERROR - TTS failed: Voice generation failed
+2026-10-19 06:39:14,279 - aiogram.event - INFO - Update id=297206333 is handled. Duration 2205 ms by bot id=8604487997
+2026-10-19 06:40:02,893 - aiogram.event - INFO - Update id=297206334 is handled. Duration 525 ms by bot id=8604487997
+2026-10-19 06:40:05,419 - aiogram.event - INFO - Update id=297206335 is handled. Duration 754 ms by bot id=8604487997
+2026-10-19 06:40:08,765 - httpx - INFO - HTTP Request: POST https://cute-bangla-voice-bot.lovable.app/api/public/tts "HTTP/1.1 502 Bad Gateway"
+2026-10-19 06:40:08,766 - __main__ - ERROR - TTS failed: Voice generation failed
+2026-10-19 06:40:09,071 - aiogram.event - INFO - Update id=297206336 is handled. Duration 2694 ms by bot id=8604487997
+2026-10-19 06:40:21,011 - aiogram.event - INFO - Update id=297206337 is handled. Duration 510 ms by bot id=8604487997
+2026-10-19 06:40:26,611 - aiogram.event - INFO - Update id=297206338 is handled. Duration 759 ms by bot id=8604487997
+2026-10-19 06:40:28,967 - aiogram.event - INFO - Update id=297206339 is handled. Duration 593 ms by bot id=8604487997
+2026-10-19 06:40:31,720 - aiogram.event - INFO - Update id=297206340 is handled. Duration 769 ms by bot id=8604487997
+2026-10-19 06:40:36,830 - aiogram.event - INFO - Update id=297206341 is handled. Duration 780 ms by bot id=8604487997
+2026-10-19 06:40:39,969 - aiogram.event - INFO - Update id=297206342 is handled. Duration 631 ms by bot id=8604487997
+2026-10-19 06:41:05,083 - httpx - INFO - HTTP Request: POST https://mehedi-ai-api.lovable.app/api/public/image "HTTP/1.1 200 OK"
+2026-10-19 06:41:08,111 - aiogram.event - INFO - Update id=297206343 is handled. Duration 22547 ms by bot id=8604487997
+2026-10-19 06:47:57,313 - aiogram.dispatcher - WARNING - Received SIGTERM signal
+2026-10-19 06:47:57,314 - aiogram.dispatcher - INFO - Polling stopped for bot @asdpawarai_bot id=8604487997 - 'PAWAR AI'
+2026-10-19 06:47:57,314 - aiogram.dispatcher - INFO - Polling stopped
+[2026-10-19T06:47:58.680610] Server stopped

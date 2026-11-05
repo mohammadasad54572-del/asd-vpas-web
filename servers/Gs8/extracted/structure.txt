@@ -1,0 +1,37 @@
+frontend/
+├── client.html
+├── landing.html
+├── login.html
+├── admin.html
+├── css/
+│   └── style.css
+└── js/
+    ├── script.js
+    └── login.js
+
+rasin-data/
+├── __init__.py
+├── database.py
+├── middleware.py
+│
+├── models/
+│   ├── __init__.py
+│   ├── user.py
+│   ├── group.py
+│   ├── transaction.py
+│   ├── coupon.py
+│   ├── activity_log.py
+│   ├── inbox_message.py
+│   ├── alert.py
+│   ├── notification.py
+│   ├── push_subscription.py
+│   └── pricing.py
+│
+├── auth.py          # login, logout, me, change-password, signup
+├── client.py        # launch group, my-groups, group-action, glory, clan-info, squad-file, activity-log, alerts, notifications
+├── transaction.py   # buy-credits, list, cancel, update-order-id
+├── coupon.py        # create, redeem, my-coupons, cancel, redeemed
+├── inbox.py         # messages, mark-read, mark-all-read, dismiss
+├── push.py          # vapid-key, subscribe, unsubscribe
+├── public.py        # pricing, contact-info, telegram-offer
+└── admin.py         # users list/edit/delete, tx approve/reject, coupon generate, send inbox msg, create alert, pricing config, stats

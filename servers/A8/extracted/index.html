@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rasin Glory — Command Center</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Your existing CSS goes here via: <link rel="stylesheet" href="/styles.css"> -->
+<!-- For standalone demo, critical vars are inlined -->
+<style>
+:root {
+    --ng-bg-deep: #0E0E0E;
+    --ng-bg-surface: #141414;
+    --ng-bg-elevated: #1A1A1A;
+    --ng-bg-card: #171717;
+    --ng-cream: #F5E6D3;
+    --ng-ivory: #E8D5B7;
+    --ng-warm: #D4C4A8;
+    --ng-gold: #C9B896;
+    --ng-text: #EEEEEE;
+    --ng-text-muted: #999999;
+    --ng-text-subtle: #666666;
+    --ng-border: #2D2D2D;
+    --ng-border-hover: #3D3D3D;
+    --ng-gradient-brand: linear-gradient(135deg, #F5E6D3, #E8D5B7);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: var(--ng-bg-deep);
+    color: var(--ng-text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+h1,h2,h3,h4,h5 { font-family: 'Outfit', sans-serif; letter-spacing: -0.02em; font-weight: 600; }
+
+/* ── TOPNAV ── */
+.topnav {
+    height: 60px;
+    background: rgba(14,14,14,0.92);
+    backdrop-filter: saturate(140%) blur(14px);
+    border-bottom: 1px solid var(--ng-border);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+.topnav-inner {
+    height: 100%;
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+.topnav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+.topnav-mark {
+    width: 34px; height: 34px;
+    border-radius: 10px;
+    display: grid; place-items: center;
+    color: #0E0E0E;
+    background: linear-gradient(135deg, var(--ng-cream), var(--ng-gold));
+    box-shadow: 0 0 0 1px rgba(245,230,211,.15), 0 4px 14px rgba(201,184,150,.18);
+    flex-shrink: 0;
+}
+.topnav-mark svg { width: 18px; height: 18px; }
+.topnav-title { font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 700; color: #fff; letter-spacing: -0.01em; }
+.topnav-live {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 10px; border-radius: 999px;
+    font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+    color: #34D399; background: rgba(52,211,153,.08); border: 1px solid rgba(52,211,153,.18);
+}
+.topnav-live-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #34D399;
+    animation: livePulse 2s infinite;
+}
+@keyframes livePulse { 0%,100%{opacity:1}50%{opacity:.4} }
+.topnav-actions { display: flex; align-items: center; gap: 6px; }
+
+/* ── LAYOUT ── */
+.page { max-width: 1480px; margin: 0 auto; padding: 24px 20px; }
+
+/* ── STATS ROW ── */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+}
+.stat-tile {
+    background: var(--ng-bg-card);
+    border: 1px solid var(--ng-border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .2s ease;
+}
+.stat-tile:hover { border-color: var(--ng-border-hover); }
+.stat-tile-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ng-text-muted);
+    margin-bottom: 8px;
+}
+.stat-tile-value {
+    font-family: 'Outfit', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ng-text);
+    line-height: 1;
+    letter-spacing: -0.03em;
+}
+.stat-tile-value.cream { color: var(--ng-cream); }
+.stat-tile-sub {
+    font-size: 11px;
+    color: var(--ng-text-subtle);
+    margin-top: 6px;
+}
+.stat-tile-accent {
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: rgba(245,230,211,.04);
+    transform: translate(30px, 30px);
+}
+
+/* ── SECTION HEADER ── */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+.section-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ng-text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.section-count {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ng-cream);
+    background: rgba(245,230,211,.08);
+    border: 1px solid rgba(245,230,211,.15);
+}
+.section-actions { display: flex; align-items: center; gap: 8px; }
+
+/* ── FILTER TABS ── */
+.filter-tabs {
+    display: flex;
+    gap: 4px;
+    padding: 3px;
+    background: var(--ng-bg-surface);
+    border: 1px solid var(--ng-border);
+    border-radius: 10px;
+}
+.ftab {
+    padding: 6px 14px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ng-text-muted);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color .15s, background .15s;
+    white-space: nowrap;
+}
+.ftab:hover { color: var(--ng-text); }
+.ftab.active {
+    color: #0E0E0E;
+    background: linear-gradient(135deg, var(--ng-cream), var(--ng-warm));
+    font-weight: 600;
+}
+
+/* ── SEARCH ── */
+.search-wrap {
+    position: relative;
+}
+.search-wrap svg {
+    position: absolute;
+    left: 12px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--ng-text-subtle);
+    width: 14px; height: 14px;
+    pointer-events: none;
+}
+.search-input {
+    width: 220px;
+    height: 36px;
+    background: var(--ng-bg-surface);
+    border: 1px solid var(--ng-border);
+    border-radius: 10px;
+    padding: 0 12px 0 34px;
+    color: var(--ng-text);
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: border-color .2s, background .2s;
+}
+.search-input:focus {
+    border-color: var(--ng-warm);
+    background: var(--ng-bg-elevated);
+}
+.search-input::placeholder { color: var(--ng-text-subtle); }
+
+/* ── SQUAD GRID ── */
+.squads-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 16px;
+}
+
+/* ── SQUAD CARD ── */
+.squad-card {
+    background: var(--ng-bg-card);
+    border: 1px solid var(--ng-border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color .2s ease, box-shadow .2s ease;
+    position: relative;
+}
+.squad-card:hover {
+    border-color: var(--ng-border-hover);
+    box-shadow: 0 8px 32px rgba(0,0,0,.3);
+}
+.squad-card-head {
+    padding: 20px 20px 16px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    border-bottom: 1px solid var(--ng-border);
+}
+.squad-card-info { flex: 1; min-width: 0; }
+.squad-clan-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ng-text);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.clan-level-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #0E0E0E;
+    background: linear-gradient(135deg, var(--ng-cream), var(--ng-warm));
+    flex-shrink: 0;
+    font-family: 'Roboto Mono', monospace;
+}
+.squad-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.squad-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--ng-text-muted);
+}
+.squad-meta-item svg { width: 11px; height: 11px; color: var(--ng-text-subtle); }
+.squad-status { flex-shrink: 0; }
+
+/* Status pills */
+.spill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+.spill-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+}
+.spill.in-match  { color: #34D399; background: rgba(52,211,153,.1); border: 1px solid rgba(52,211,153,.2); }
+.spill.ready     { color: var(--ng-cream); background: rgba(245,230,211,.08); border: 1px solid rgba(245,230,211,.18); }
+.spill.paused    { color: #FBBF24; background: rgba(251,191,36,.1); border: 1px solid rgba(251,191,36,.2); }
+.spill.no-bots   { color: #F87171; background: rgba(248,113,113,.1); border: 1px solid rgba(248,113,113,.2); }
+
+/* Glory block */
+.glory-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--ng-border);
+}
+.glory-cell {
+    background: var(--ng-bg-card);
+    padding: 16px 20px;
+}
+.glory-cell-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--ng-text-subtle);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+.glory-cell-label svg { width: 10px; height: 10px; }
+.glory-cell-value {
+    font-family: 'Outfit', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ng-text);
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+.glory-gain {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    margin-top: 5px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+}
+.glory-gain.pos { color: #34D399; }
+.glory-gain.neg { color: #F87171; }
+.glory-gain.zero { color: var(--ng-text-subtle); }
+.glory-since { font-size: 10px; color: var(--ng-text-subtle); margin-top: 4px; font-family: 'Roboto Mono', monospace; }
+
+/* Card stats row */
+.card-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--ng-border);
+}
+.card-stat-cell {
+    background: var(--ng-bg-surface);
+    padding: 12px 14px;
+    text-align: center;
+}
+.card-stat-val {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ng-text);
+    line-height: 1;
+    margin-bottom: 3px;
+}
+.card-stat-lbl {
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--ng-text-subtle);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+/* Card footer */
+.card-foot {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.card-foot-meta {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+.card-foot-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    color: var(--ng-text-subtle);
+    font-family: 'Roboto Mono', monospace;
+}
+.card-foot-item svg { width: 10px; height: 10px; }
+
+/* ── BUTTONS ── */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 36px;
+    width: auto;
+    padding: 0 14px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all .15s ease;
+    text-decoration: none;
+    border: none;
+    white-space: nowrap;
+}
+.btn svg { width: 14px; height: 14px; }
+.btn-ghost {
+    color: var(--ng-text-muted);
+    background: transparent;
+    border: 1px solid var(--ng-border);
+}
+.btn-ghost:hover {
+    color: var(--ng-text);
+    background: rgba(255,255,255,.04);
+    border-color: var(--ng-border-hover);
+}
+.btn-cream {
+    color: #0E0E0E;
+    background: linear-gradient(135deg, var(--ng-cream), var(--ng-warm));
+    box-shadow: 0 2px 8px rgba(245,230,211,.15);
+}
+.btn-cream:hover {
+    filter: brightness(1.05);
+    box-shadow: 0 4px 16px rgba(245,230,211,.22);
+}
+.btn-danger-soft {
+    color: #F87171;
+    background: rgba(248,113,113,.08);
+    border: 1px solid rgba(248,113,113,.2);
+}
+.btn-danger-soft:hover {
+    background: rgba(248,113,113,.14);
+}
+.btn-sm { height: 30px; padding: 0 10px; font-size: 11px; border-radius: 8px; }
+
+/* ── EMPTY STATE ── */
+.empty-state {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 56px 24px;
+    text-align: center;
+}
+.empty-state-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: grid; place-items: center;
+    background: var(--ng-bg-surface);
+    border: 1px solid var(--ng-border);
+    color: var(--ng-text-subtle);
+    margin-bottom: 4px;
+}
+.empty-state-icon svg { width: 18px; height: 18px; }
+.empty-state p {
+    color: var(--ng-text-subtle);
+    font-size: 13px;
+    max-width: 260px;
+}
+
+/* ── MODAL / DRAWER ── */
+.modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0,0,0,0);
+    backdrop-filter: blur(0px);
+    visibility: hidden;
+    transition: background .25s ease, backdrop-filter .25s ease, visibility 0s .25s;
+    pointer-events: none;
+}
+.modal-overlay.open {
+    background: rgba(0,0,0,.72);
+    backdrop-filter: blur(8px);
+    visibility: visible;
+    transition: background .25s ease, backdrop-filter .25s ease;
+    pointer-events: auto;
+}
+.modal-box {
+    background: var(--ng-bg-card);
+    border: 1px solid var(--ng-border);
+    border-radius: 18px;
+    width: 100%;
+    max-width: 560px;
+    max-height: 88vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 80px rgba(0,0,0,.8);
+    opacity: 0;
+    transform: translateY(20px) scale(.97);
+    transition: opacity .28s cubic-bezier(.16,1,.3,1), transform .28s cubic-bezier(.16,1,.3,1);
+}
+.modal-overlay.open .modal-box {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+@media (max-width: 640px) {
+    .modal-overlay { align-items: flex-end; padding: 0; }
+    .modal-box {
+        border-radius: 18px 18px 0 0;
+        max-width: 100%;
+        max-height: 92vh;
+        transform: translateY(40px);
+    }
+    .modal-overlay.open .modal-box { transform: translateY(0); }
+}
+.modal-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--ng-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-shrink: 0;
+}
+.modal-header h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ng-text);
+}
+.modal-header h3 small {
+    display: block;
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--ng-text-muted);
+    margin-top: 2px;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0;
+}
+.modal-close {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--ng-border);
+    background: transparent;
+    color: var(--ng-text-muted);
+    cursor: pointer;
+    display: grid; place-items: center;
+    transition: color .15s, background .15s;
+    flex-shrink: 0;
+}
+.modal-close:hover { color: #F87171; background: rgba(248,113,113,.08); border-color: rgba(248,113,113,.2); }
+.modal-close svg { width: 16px; height: 16px; }
+.modal-body {
+    padding: 20px 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+.modal-body::-webkit-scrollbar { width: 6px; }
+.modal-body::-webkit-scrollbar-thumb { background: var(--ng-border); border-radius: 4px; }
+
+/* Bot details in modal */
+.bot-list { display: flex; flex-direction: column; gap: 10px; }
+.bot-row {
+    background: var(--ng-bg-surface);
+    border: 1px solid var(--ng-border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: border-color .15s;
+}
+.bot-row:hover { border-color: var(--ng-border-hover); }
+.bot-avatar {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: grid; place-items: center;
+    background: linear-gradient(135deg, rgba(245,230,211,.1), rgba(201,184,150,.06));
+    border: 1px solid rgba(245,230,211,.14);
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ng-cream);
+    flex-shrink: 0;
+}
+.bot-info { flex: 1; min-width: 0; }
+.bot-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ng-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.bot-meta-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+}
+.bot-meta-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: var(--ng-text-muted);
+    font-family: 'Roboto Mono', monospace;
+}
+.bot-meta-tag svg { width: 10px; height: 10px; }
+.bot-status-tag {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 600;
+}
+.bot-status-tag.in-match  { color: #34D399; background: rgba(52,211,153,.1); }
+.bot-status-tag.online    { color: var(--ng-cream); background: rgba(245,230,211,.08); }
+.bot-status-tag.paused    { color: #FBBF24; background: rgba(251,191,36,.1); }
+.bot-status-tag.offline   { color: #F87171; background: rgba(248,113,113,.08); }
+
+/* modal glory summary */
+.modal-clan-glory {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.mgc-cell {
+    background: var(--ng-bg-elevated);
+    border: 1px solid var(--ng-border);
+    border-radius: 10px;
+    padding: 14px 16px;
+}
+.mgc-label {
+    font-size: 10px;
+    color: var(--ng-text-subtle);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin-bottom: 6px;
+}
+.mgc-value {
+    font-family: 'Outfit', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ng-text);
+}
+.mgc-gain {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    margin-top: 3px;
+}
+.mgc-gain.pos { color: #34D399; }
+.mgc-gain.zero { color: var(--ng-text-subtle); }
+
+/* Modal for new squad */
+.field-block { margin-bottom: 18px; }
+.field-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ng-text-muted);
+    margin-bottom: 7px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+.field-input, .field-select {
+    width: 100%;
+    height: 44px;
+    background: var(--ng-bg-surface);
+    border: 1px solid var(--ng-border);
+    border-radius: 10px;
+    padding: 0 14px;
+    color: var(--ng-text);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    appearance: none;
+}
+.field-input:focus, .field-select:focus {
+    border-color: var(--ng-warm);
+    box-shadow: 0 0 0 3px rgba(212,196,168,.1);
+}
+.field-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23666' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 36px;
+    cursor: pointer;
+}
+.field-select option { background: #1A1A1A; }
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+/* Toast */
+#toast-stack {
+    position: fixed; right: 20px; bottom: 20px; z-index: 999;
+    display: flex; flex-direction: column-reverse; gap: 8px;
+    width: min(360px, calc(100vw - 32px));
+    pointer-events: none;
+}
+.toast-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(23,23,23,.97);
+    border: 1px solid var(--ng-border);
+    box-shadow: 0 12px 32px rgba(0,0,0,.5);
+    font-size: 13px;
+    color: var(--ng-text);
+    pointer-events: auto;
+    animation: toastIn .2s ease;
+}
+.toast-item.success { border-left: 3px solid #34D399; }
+.toast-item.error   { border-left: 3px solid #F87171; }
+.toast-item.info    { border-left: 3px solid var(--ng-cream); }
+@keyframes toastIn { from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none} }
+.toast-ico { width: 22px; height: 22px; flex-shrink: 0; }
+.toast-ico svg { width: 16px; height: 16px; }
+
+/* Uptime ticker */
+#uptime-ticker {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--ng-cream);
+}
+
+/* Spinner */
+@keyframes spin { to{transform:rotate(360deg)} }
+.spin { animation: spin .7s linear infinite; }
+
+/* Refresh spin button */
+.refresh-icon { transition: transform .3s ease; }
+.refreshing .refresh-icon { animation: spin .6s linear infinite; }
+
+/* Responsive */
+@media (max-width: 1100px) {
+    .stats-row { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 700px) {
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .squads-grid { grid-template-columns: 1fr; }
+    .page { padding: 16px 14px; }
+    .topnav-title { display: none; }
+    .hide-mobile { display: none; }
+    .search-input { width: 160px; }
+}
+@media (max-width: 420px) {
+    .field-grid { grid-template-columns: 1fr; }
+}
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--ng-bg-surface); }
+::-webkit-scrollbar-thumb { background: var(--ng-border); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="topnav">
+    <div class="topnav-inner">
+        <a class="topnav-brand" href="#">
+            <div class="topnav-mark">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+            </div>
+            <span class="topnav-title">Rasin Glory</span>
+        </a>
+
+        <div class="topnav-live">
+            <span class="topnav-live-dot"></span>
+            Command Center
+        </div>
+
+        <div class="topnav-actions">
+            <button class="btn btn-ghost btn-sm" id="btn-refresh" onclick="manualRefresh()" title="Refresh">
+                <svg class="refresh-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
+                <span class="hide-mobile">Refresh</span>
+            </button>
+            <button class="btn btn-cream btn-sm" onclick="openSquadModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+                <span>New Squad</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- PAGE -->
+<main class="page">
+
+    <!-- STATS -->
+    <div class="stats-row">
+        <div class="stat-tile">
+            <div class="stat-tile-label">Active Squads</div>
+            <div class="stat-tile-value" id="st-squads">0</div>
+            <div class="stat-tile-sub" id="st-bots">0 bots running</div>
+            <div class="stat-tile-accent"></div>
+        </div>
+        <div class="stat-tile">
+            <div class="stat-tile-label">Matches Started</div>
+            <div class="stat-tile-value" id="st-started">0</div>
+            <div class="stat-tile-sub" id="st-per-hour">0 / hour</div>
+            <div class="stat-tile-accent"></div>
+        </div>
+        <div class="stat-tile">
+            <div class="stat-tile-label">Matches Done</div>
+            <div class="stat-tile-value" id="st-done">0</div>
+            <div class="stat-tile-sub" id="st-active">0 active now</div>
+            <div class="stat-tile-accent"></div>
+        </div>
+        <div class="stat-tile">
+            <div class="stat-tile-label">Total EXP</div>
+            <div class="stat-tile-value cream" id="st-exp">+0</div>
+            <div class="stat-tile-sub" id="st-exp-hr">0 EXP / hr</div>
+            <div class="stat-tile-accent"></div>
+        </div>
+        <div class="stat-tile">
+            <div class="stat-tile-label">Uptime</div>
+            <div id="uptime-ticker">00:00:00</div>
+            <div class="stat-tile-sub">100% operational</div>
+            <div class="stat-tile-accent"></div>
+        </div>
+    </div>
+
+    <!-- SQUADS SECTION -->
+    <div class="section-header">
+        <div class="section-title">
+            Squads
+            <span class="section-count" id="badge-count">0</span>
+        </div>
+        <div class="section-actions" style="gap:10px;flex-wrap:wrap;">
+            <div class="search-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input class="search-input" id="squad-search" type="text" placeholder="Clan name or ID…" oninput="filterSquads()">
+            </div>
+            <div class="filter-tabs">
+                <button class="ftab active" onclick="setFilter('all',this)">All</button>
+                <button class="ftab" onclick="setFilter('in_match',this)">In Match</button>
+                <button class="ftab" onclick="setFilter('ready',this)">Ready</button>
+                <button class="ftab" onclick="setFilter('paused',this)">Paused</button>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="togglePauseAll()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                Pause All
+            </button>
+        </div>
+    </div>
+
+    <div class="squads-grid" id="squads-grid">
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <p>Loading…</p>
+        </div>
+    </div>
+
+</main>
+
+<!-- TOAST STACK -->
+<div id="toast-stack"></div>
+
+<!-- SQUAD DETAILS MODAL -->
+<div class="modal-overlay" id="details-modal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3 id="details-modal-title">
+                Squad Details
+                <small id="details-modal-sub">Loading…</small>
+            </h3>
+            <button class="modal-close" onclick="closeModal('details-modal')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="modal-clan-glory" id="details-glory"></div>
+            <div id="details-bot-list" class="bot-list"></div>
+        </div>
+    </div>
+</div>
+
+<!-- NEW SQUAD MODAL -->
+<div class="modal-overlay" id="squad-modal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>New Squad
+                <small>Configure bots and target clan</small>
+            </h3>
+            <button class="modal-close" onclick="closeModal('squad-modal')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div style="background:rgba(245,230,211,.04);border:1px solid rgba(245,230,211,.12);border-radius:10px;padding:12px 14px;margin-bottom:20px;font-size:12px;color:var(--ng-text-muted);line-height:1.6;">
+                4 guest accounts will join the clan and start Team Match together. Each squad restarts automatically when a match ends. If no match begins within 20 minutes, the process restarts.
+            </div>
+            <form onsubmit="submitSquad(event)">
+                <div class="field-grid" style="margin-bottom:18px;">
+                    <div class="field-block" style="margin:0;">
+                        <label class="field-label">Region</label>
+                        <select class="field-select" id="sq-region">
+                            <option value="BD">BD — Bangladesh</option>
+                            <option value="IND">IND — India</option>
+                            <option value="ID">ID — Indonesia</option>
+                            <option value="ME">ME — Middle East</option>
+                            <option value="PK">PK — Pakistan</option>
+                            <option value="VN">VN — Vietnam</option>
+                            <option value="TH">TH — Thailand</option>
+                            <option value="TW">TW — Taiwan</option>
+                            <option value="RU">RU — Russia</option>
+                            <option value="SAC">SAC — South America</option>
+                            <option value="BR">BR — Brazil</option>
+                            <option value="NA">NA — North America</option>
+                            <option value="SG">SG — Singapore</option>
+                            <option value="US">US — United States</option>
+                        </select>
+                    </div>
+                    <div class="field-block" style="margin:0;">
+                        <label class="field-label">Clan ID</label>
+                        <input class="field-input" id="sq-clan" type="text" placeholder="3105458988" value="3105458988">
+                    </div>
+                </div>
+                <div class="field-block">
+                    <label class="field-label">Bot Count</label>
+                    <select class="field-select" id="sq-count">
+                        <option value="4" selected>4 bots (full squad)</option>
+                        <option value="3">3 bots</option>
+                        <option value="2">2 bots</option>
+                    </select>
+                </div>
+                <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:24px;">
+                    <button type="button" class="btn btn-ghost" onclick="closeModal('squad-modal')">Cancel</button>
+                    <button type="submit" class="btn btn-cream" id="sq-submit-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                        Create & Start
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+/* ── STATE ── */
+const GLORY_KEY = "rasin_glory_baselines_v2";
+const S = {
+    stats: { accounts: [], logs: [] },
+    teams: [],
+    clans: [],
+    gloryBase: {},
+    filter: "all",
+    errorCount: 0,
+    lastClanFetch: 0,
+};
+
+/* ── INIT ── */
+(function init() {
+    loadGloryBase();
+    fetchStats();
+    fetchTeamsAndClans(true);
+    setInterval(fetchStats, 3000);
+    setInterval(() => fetchTeamsAndClans(false), 15000);
+    startUptimeTicker();
+})();
+
+/* ── UPTIME ── */
+const clientStart = Date.now();
+function startUptimeTicker() {
+    setInterval(() => {
+        const s = Math.floor((Date.now() - clientStart) / 1000);
+        const h = String(Math.floor(s / 3600)).padStart(2,"0");
+        const m = String(Math.floor((s % 3600) / 60)).padStart(2,"0");
+        const sec = String(s % 60).padStart(2,"0");
+        setText("uptime-ticker", `${h}:${m}:${sec}`);
+    }, 1000);
+}
+
+/* ── GLORY BASELINE ── */
+function loadGloryBase() {
+    try { S.gloryBase = JSON.parse(localStorage.getItem(GLORY_KEY) || "{}"); }
+    catch(e) { S.gloryBase = {}; }
+}
+function saveGloryBase() {
+    try { localStorage.setItem(GLORY_KEY, JSON.stringify(S.gloryBase)); } catch(e){}
+}
+function setBaseline(clanId, totalGlory, weeklyGlory) {
+    S.gloryBase[String(clanId)] = { total: +totalGlory||0, weekly: +weeklyGlory||0, ts: Date.now() };
+    saveGloryBase();
+}
+function resetBaseline(clanId) {
+    if(!confirm(`Reset glory baseline for clan ${clanId}?`)) return;
+    delete S.gloryBase[String(clanId)];
+    saveGloryBase();
+    toast("Baseline reset", "info");
+    renderSquads();
+}
+
+/* ── API ── */
+async function apiGet(path) {
+    const res = await fetch(path, { cache: "no-store" });
+    if(!res.ok) throw new Error("HTTP " + res.status);
+    return res.json();
+}
+async function apiPost(path, body) {
+    try {
+        const res = await fetch(path, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: body !== undefined ? JSON.stringify(body) : undefined
+        });
+        return res.json();
+    } catch(e) { return { status: "error", error: e.message }; }
+}
+
+/* ── FETCH STATS ── */
+async function fetchStats() {
+    try {
+        const d = await apiGet("/api/stats");
+        S.stats = d;
+        S.errorCount = 0;
+        updateStatsRow(d);
+    } catch(e) {
+        if(++S.errorCount <= 1) console.warn("[stats]", e.message);
+    }
+}
+
+function updateStatsRow(d) {
+    const accs = Array.isArray(d.accounts) ? d.accounts : [];
+    const online = accs.filter(a => a.status === "ONLINE" || a.status === "IN_MATCH").length;
+    setText("st-squads", S.teams.length);
+    setText("st-bots", online + " bots running");
+    setText("st-started", d.total_matches_started || 0);
+    const uptimeH = Math.max(0.016, (d.uptime || 60) / 3600);
+    setText("st-per-hour", Math.round((d.total_matches_started||0) / uptimeH) + " / hour");
+    setText("st-done", d.total_matches || 0);
+    setText("st-active", (d.total_active_matches || 0) + " active now");
+    setText("st-exp", "+" + Number(d.total_gained_exp||0).toLocaleString());
+    setText("st-exp-hr", Number(d.exp_per_hour||0).toLocaleString() + " EXP / hr");
+}
+
+/* ── FETCH TEAMS & CLANS ── */
+async function fetchTeamsAndClans(force) {
+    try {
+        const td = await apiGet("/api/teams");
+        if(td?.ok && Array.isArray(td.teams)) S.teams = td.teams;
+    } catch(e) {}
+
+    const now = Date.now();
+    if(force || now - S.lastClanFetch > 25000) {
+        try {
+            const cd = await apiGet("/api/clan/info" + (force ? "?force=1" : ""));
+            if(cd?.ok) {
+                S.clans = cd.clans || (cd.clan_id ? [cd] : []);
+                S.lastClanFetch = now;
+            }
+        } catch(e) {}
+    }
+
+    for(const c of S.clans) {
+        const id = String(c.clan_id);
+        if(!S.gloryBase[id]) setBaseline(id, c.total_glory, c.weekly_glory);
+    }
+
+    renderSquads();
+}
+
+/* ── RENDER SQUADS ── */
+function renderSquads() {
+    const grid = document.getElementById("squads-grid");
+    if(!grid) return;
+
+    setText("badge-count", S.teams.length);
+    setText("st-squads", S.teams.length);
+
+    if(!S.teams.length) {
+        grid.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <p>No squads running</p>
+                <button class="btn btn-ghost btn-sm" onclick="openSquadModal()">Create one</button>
+            </div>`;
+        return;
+    }
+
+    const allAccs = Array.isArray(S.stats.accounts) ? S.stats.accounts : [];
+    grid.innerHTML = "";
+
+    for(const team of S.teams) {
+        const clan = S.clans.find(c => String(c.clan_id) === String(team.clan_id)) || null;
+        const accs = allAccs.filter(a => (team.uids||[]).includes(String(a.auth_uid||"")));
+        const card = buildCard(team, clan, accs);
+        grid.appendChild(card);
+    }
+
+    filterSquads();
+}
+
+function buildCard(team, clan, accs) {
+    const el = document.createElement("div");
+    el.className = "squad-card";
+
+    const clanId = String(team.clan_id);
+    const clanName = clan?.clan_name || `Clan ${clanId}`;
+    const clanLvl  = clan?.level || 0;
+    const region   = clan?.region || team.region || "?";
+    const members  = clan?.member_count || 0;
+    const cap      = clan?.capacity || "?";
+    const totalG   = +(clan?.total_glory  || 0);
+    const weeklyG  = +(clan?.weekly_glory || 0);
+
+    el.dataset.clan    = clanId;
+    el.dataset.clanName = clanName.toLowerCase();
+    el.dataset.region  = region;
+
+    const b = S.gloryBase[clanId];
+    const gainTotal  = b ? totalG  - b.total  : 0;
+    const gainWeekly = b ? weeklyG - b.weekly : 0;
+    const since = b ? agoStr(b.ts) : "now";
+
+    const matches  = accs.reduce((s,a)=> s + (+a.matches||0), 0);
+    const exp      = accs.reduce((s,a)=> s + (+a.gained_exp||0), 0);
+    const active   = accs.reduce((s,a)=> s + (+a.active_matches||0), 0);
+    const botCount = accs.length;
+    const paused   = botCount > 0 && accs.every(a => a.is_paused || a.status === "PAUSED");
+
+    let statusCls, statusLabel;
+    if(paused)         { statusCls = "paused";   statusLabel = "Paused";   }
+    else if(active>0)  { statusCls = "in-match";  statusLabel = "In Match"; }
+    else if(botCount>0){ statusCls = "ready";    statusLabel = "Ready";    }
+    else               { statusCls = "no-bots";  statusLabel = "No Bots";  }
+
+    el.dataset.status = statusCls;
+
+    const gc = v => v > 0 ? "pos" : (v < 0 ? "neg" : "zero");
+    const gt = v => v > 0 ? `+${v.toLocaleString()}` : (v < 0 ? v.toLocaleString() : "0");
+
+    const lastMatch = accs.length && accs[0].last_match_time ? accs[0].last_match_time : "—";
+
+    el.innerHTML = `
+        <div class="squad-card-head">
+            <div class="squad-card-info">
+                <div class="squad-clan-name">
+                    ${esc(clanName)}
+                    ${clanLvl ? `<span class="clan-level-badge">LV ${clanLvl}</span>` : ""}
+                </div>
+                <div class="squad-meta-row">
+                    <span class="squad-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        ${esc(region)}
+                    </span>
+                    <span class="squad-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        ${members}/${cap}
+                    </span>
+                    <span class="squad-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                        ${esc(clanId)}
+                    </span>
+                </div>
+            </div>
+            <div class="squad-status">
+                <span class="spill ${statusCls}">
+                    <span class="spill-dot"></span>
+                    ${statusLabel}
+                </span>
+            </div>
+        </div>
+
+        <div class="glory-block">
+            <div class="glory-cell">
+                <div class="glory-cell-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+                    Total Glory
+                </div>
+                <div class="glory-cell-value">${totalG.toLocaleString()}</div>
+                <div class="glory-gain ${gc(gainTotal)}">${gt(gainTotal)}</div>
+                <div class="glory-since">since ${since}</div>
+            </div>
+            <div class="glory-cell">
+                <div class="glory-cell-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    Weekly Glory
+                </div>
+                <div class="glory-cell-value">${weeklyG.toLocaleString()}</div>
+                <div class="glory-gain ${gc(gainWeekly)}">${gt(gainWeekly)}</div>
+                <div class="glory-since">since ${since}</div>
+            </div>
+        </div>
+
+        <div class="card-stats">
+            <div class="card-stat-cell">
+                <div class="card-stat-val">${botCount}</div>
+                <div class="card-stat-lbl">Bots</div>
+            </div>
+            <div class="card-stat-cell">
+                <div class="card-stat-val">${matches.toLocaleString()}</div>
+                <div class="card-stat-lbl">Matches</div>
+            </div>
+            <div class="card-stat-cell">
+                <div class="card-stat-val">+${exp.toLocaleString()}</div>
+                <div class="card-stat-lbl">EXP</div>
+            </div>
+            <div class="card-stat-cell">
+                <div class="card-stat-val">${active}</div>
+                <div class="card-stat-lbl">Active</div>
+            </div>
+        </div>
+
+        <div class="card-foot">
+            <div class="card-foot-meta">
+                <span class="card-foot-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    Group ${esc(team.group_id || "—")}
+                </span>
+                <span class="card-foot-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    ${esc(lastMatch)}
+                </span>
+            </div>
+            <div style="display:flex;gap:6px;">
+                <button class="btn btn-ghost btn-sm" onclick="refreshClan('${escA(clanId)}')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
+                </button>
+                <button class="btn btn-ghost btn-sm" onclick="resetBaseline('${escA(clanId)}')" title="Reset glory baseline">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v6h6"/><path d="M3 13a9 9 0 1 0 3-7.7L3 8"/></svg>
+                </button>
+                <button class="btn btn-cream btn-sm" onclick="openDetails('${escA(clanId)}')">
+                    Details
+                </button>
+            </div>
+        </div>
+    `;
+
+    return el;
+}
+
+/* ── FILTER ── */
+function setFilter(f, btn) {
+    S.filter = f;
+    document.querySelectorAll(".ftab").forEach(x => x.classList.remove("active"));
+    if(btn) btn.classList.add("active");
+    filterSquads();
+}
+function filterSquads() {
+    const q = (document.getElementById("squad-search")?.value || "").toLowerCase().trim();
+    document.querySelectorAll(".squad-card").forEach(card => {
+        const matchQ = !q || card.dataset.clanName?.includes(q) || card.dataset.clan?.includes(q);
+        let matchF = true;
+        if(S.filter === "in_match") matchF = card.dataset.status === "in-match";
+        else if(S.filter === "ready") matchF = card.dataset.status === "ready";
+        else if(S.filter === "paused") matchF = card.dataset.status === "paused";
+        card.style.display = (matchQ && matchF) ? "" : "none";
+    });
+}
+
+/* ── DETAILS MODAL ── */
+function openDetails(clanId) {
+    const clan = S.clans.find(c => String(c.clan_id) === clanId);
+    const team = S.teams.find(t => String(t.clan_id) === clanId);
+    const allAccs = Array.isArray(S.stats.accounts) ? S.stats.accounts : [];
+    const accs = allAccs.filter(a => (team?.uids||[]).includes(String(a.auth_uid||"")));
+
+    const clanName = clan?.clan_name || `Clan ${clanId}`;
+    const totalG   = +(clan?.total_glory  || 0);
+    const weeklyG  = +(clan?.weekly_glory || 0);
+    const b = S.gloryBase[clanId];
+    const gainTotal  = b ? totalG  - b.total  : 0;
+    const gainWeekly = b ? weeklyG - b.weekly : 0;
+    const gc = v => v > 0 ? "pos" : "zero";
+    const gt = v => v > 0 ? `+${v.toLocaleString()}` : "0";
+
+    setText("details-modal-title", clanName);
+    document.getElementById("details-modal-sub").textContent = `Clan ${clanId} · ${clan?.region || team?.region || "?"}`;
+
+    document.getElementById("details-glory").innerHTML = `
+        <div class="mgc-cell">
+            <div class="mgc-label">Total Glory</div>
+            <div class="mgc-value">${totalG.toLocaleString()}</div>
+            <div class="mgc-gain ${gc(gainTotal)}">${gt(gainTotal)} gained</div>
+        </div>
+        <div class="mgc-cell">
+            <div class="mgc-label">Weekly Glory</div>
+            <div class="mgc-value">${weeklyG.toLocaleString()}</div>
+            <div class="mgc-gain ${gc(gainWeekly)}">${gt(gainWeekly)} gained</div>
+        </div>
+    `;
+
+    const botListEl = document.getElementById("details-bot-list");
+
+    // If no real accounts yet, build placeholder rows from team uid list
+    let displayAccs = accs;
+    if(!displayAccs.length && team?.uids?.length) {
+        displayAccs = team.uids.map((uid, i) => ({
+            auth_uid: uid, nickname: `Bot ${i+1}`, level: "—",
+            glory: 0, clan_glory: 0, matches: 0, gained_exp: 0,
+            status: "ONLINE", active_matches: 0
+        }));
+    }
+
+    if(!displayAccs.length) {
+        botListEl.innerHTML = `<div style="text-align:center;padding:32px;color:var(--ng-text-subtle);font-size:13px;">No bot data available</div>`;
+    } else {
+        botListEl.innerHTML = displayAccs.map((a, i) => {
+            const nick   = esc(a.nickname || a.name || `Bot ${i+1}`);
+            const level  = a.level || a.player_level || "—";
+            const glory  = (+a.glory || +a.clan_glory || 0).toLocaleString();
+            const matches = (+a.matches || 0).toLocaleString();
+            const expG   = (+a.gained_exp || 0).toLocaleString();
+            const st     = (a.status || "ONLINE").toLowerCase().replace("_", "-");
+            const stCls  = st.includes("match") ? "in-match" : st.includes("pause") ? "paused" : st === "offline" ? "offline" : "online";
+            const stLabel = st.includes("match") ? "In Match" : st.includes("pause") ? "Paused" : st === "offline" ? "Offline" : "Online";
+            const initials = (a.nickname||a.name||"B").charAt(0).toUpperCase();
+
+            return `
+                <div class="bot-row">
+                    <div class="bot-avatar">${initials}</div>
+                    <div class="bot-info">
+                        <div class="bot-name">${nick}</div>
+                        <div class="bot-meta-row">
+                            <span class="bot-meta-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                                Lv ${level}
+                            </span>
+                            <span class="bot-meta-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+                                ${glory} glory
+                            </span>
+                            <span class="bot-meta-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                                ${matches} matches
+                            </span>
+                            <span class="bot-meta-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                                +${expG} EXP
+                            </span>
+                        </div>
+                    </div>
+                    <span class="bot-status-tag ${stCls}">${stLabel}</span>
+                </div>
+            `;
+        }).join("");
+    }
+
+    openModal("details-modal");
+}
+
+/* ── SQUAD CREATE ── */
+function openSquadModal() { openModal("squad-modal"); }
+async function submitSquad(e) {
+    e.preventDefault();
+    const region = document.getElementById("sq-region").value;
+    const clan   = document.getElementById("sq-clan").value.trim();
+    const count  = parseInt(document.getElementById("sq-count").value, 10);
+    if(!clan) { toast("Clan ID is required", "error"); return; }
+
+    const btn = document.getElementById("sq-submit-btn");
+    btn.disabled = true;
+    btn.innerHTML = `<svg class="spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.22-8.56"/></svg> Starting…`;
+
+    const d = await apiPost("/api/create_team", { region, clan_id: clan, count });
+    btn.disabled = false;
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Create & Start`;
+
+    if(!d?.ok) { toast("Failed: " + (d?.error || "unknown error"), "error"); return; }
+    closeModal("squad-modal");
+    toast(`Creating ${count} bots in ${region}…`, "success");
+    setTimeout(() => { fetchStats(); fetchTeamsAndClans(true); }, 5000);
+    setTimeout(() => fetchTeamsAndClans(true), 15000);
+}
+
+/* ── CLAN REFRESH ── */
+async function refreshClan(clanId) {
+    toast(`Refreshing clan ${clanId}…`, "info");
+    try {
+        const d = await apiGet(`/api/clan/info?force=1&clan_id=${encodeURIComponent(clanId)}`);
+        if(d?.ok) {
+            const idx = S.clans.findIndex(c => String(c.clan_id) === clanId);
+            if(idx >= 0) S.clans[idx] = d; else S.clans.push(d);
+            renderSquads();
+            toast("Clan data refreshed", "success");
+        } else toast("Refresh failed", "error");
+    } catch(e) { toast("Failed: " + e.message, "error"); }
+}
+
+/* ── PAUSE ALL ── */
+async function togglePauseAll() {
+    const d = await apiPost("/api/account/pause_all");
+    if(d?.status === "ok") {
+        toast(d.all_paused ? "All bots paused" : "All bots resumed", d.all_paused ? "info" : "success");
+        setTimeout(fetchStats, 500);
+    } else toast(d?.error || "Failed", "error");
+}
+
+/* ── MANUAL REFRESH ── */
+async function manualRefresh() {
+    const btn = document.getElementById("btn-refresh");
+    btn?.classList.add("refreshing");
+    await Promise.all([fetchStats(), fetchTeamsAndClans(true)]);
+    toast("Refreshed", "success");
+    setTimeout(() => btn?.classList.remove("refreshing"), 800);
+}
+
+/* ── MODAL HELPERS ── */
+function openModal(id) {
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.classList.add("open");
+    document.body.style.overflow = "hidden";
+}
+function closeModal(id) {
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.classList.remove("open");
+    document.body.style.overflow = "";
+}
+
+document.addEventListener("click", e => {
+    if(e.target?.classList?.contains("modal-overlay")) {
+        e.target.classList.remove("open");
+        document.body.style.overflow = "";
+    }
+});
+document.addEventListener("keydown", e => {
+    if(e.key === "Escape") {
+        document.querySelectorAll(".modal-overlay.open").forEach(m => {
+            m.classList.remove("open");
+        });
+        document.body.style.overflow = "";
+    }
+});
+
+/* ── TOAST ── */
+function toast(msg, type = "info") {
+    const stack = document.getElementById("toast-stack");
+    if(!stack) return;
+    const icons = {
+        success: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>`,
+        error:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`,
+        info:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r=".5" fill="currentColor"/></svg>`,
+    };
+    const t = document.createElement("div");
+    t.className = `toast-item ${type}`;
+    t.innerHTML = `<div class="toast-ico">${icons[type]||icons.info}</div><span>${esc(msg)}</span>`;
+    stack.appendChild(t);
+    setTimeout(() => {
+        t.style.transition = "opacity .25s, transform .25s";
+        t.style.opacity = "0";
+        t.style.transform = "translateX(12px)";
+        setTimeout(() => t.remove(), 250);
+    }, 3000);
+}
+
+/* ── HELPERS ── */
+function setText(id, v) {
+    const el = document.getElementById(id);
+    if(el) el.textContent = (v ?? "");
+}
+function esc(s) {
+    return String(s ?? "")
+        .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
+function escA(s) { return esc(s); }
+function agoStr(ts) {
+    if(!ts) return "now";
+    const d = Math.floor((Date.now()-ts)/1000);
+    if(d < 60)   return d + "s ago";
+    if(d < 3600) return Math.floor(d/60) + "m ago";
+    if(d < 86400)return Math.floor(d/3600) + "h ago";
+    return Math.floor(d/86400) + "d ago";
+}
+</script>
+</body>
+</html>

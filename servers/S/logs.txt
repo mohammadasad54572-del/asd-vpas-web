@@ -1,0 +1,19 @@
+
+==================================================
+[2026-11-05T02:48:20.837851] Starting: python -u main.py
+==================================================
+🚀 MEGA ULTIMATE FILE MANAGER STARTING...
+🖥️  Platform: RAILWAY
+📂 Root: /app
+📁 Script: /app/servers/S/extracted
+⚡ ALLZIP timeout: 30s
+✅ Ready for Render, Railway, Replit, Heroku, Koyeb, Fly.io, Codespaces, Gitpod, VPS!
+2026-11-05 02:48:21,919 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8691115476:AAGUfVfXWGR_SUvtT7J1jx8uVSYq4NoOHJc/getMe "HTTP/1.1 200 OK"
+2026-11-05 02:48:22,015 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8691115476:AAGUfVfXWGR_SUvtT7J1jx8uVSYq4NoOHJc/deleteWebhook "HTTP/1.1 200 OK"
+2026-11-05 02:48:22,016 - telegram.ext.Application - INFO - Application started
+2026-11-05 02:48:22,300 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8691115476:AAGUfVfXWGR_SUvtT7J1jx8uVSYq4NoOHJc/getUpdates "HTTP/1.1 200 OK"
+2026-11-05 02:48:22,599 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8691115476:AAGUfVfXWGR_SUvtT7J1jx8uVSYq4NoOHJc/sendMessage "HTTP/1.1 200 OK"
+2026-11-05 02:48:22,901 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8691115476:AAGUfVfXWGR_SUvtT7J1jx8uVSYq4NoOHJc/sendMessage "HTTP/1.1 200 OK"
+2026-11-05 02:48:32,397 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8691115476:AAGUfVfXWGR_SUvtT7J1jx8uVSYq4NoOHJc/getUpdates "HTTP/1.1 200 OK"
+2026-11-05 02:48:33,890 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8691115476:AAGUfVfXWGR_SUvtT7J1jx8uVSYq4NoOHJc/getUpdates "HTTP/1.1 200 OK"
+2026-11-05 02:48:34,346 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8691115476:AAGUfVfXWGR_SUvtT7J1jx8uVSYq4NoOHJc/editMessageText "HTTP/1.1 200 OK"
